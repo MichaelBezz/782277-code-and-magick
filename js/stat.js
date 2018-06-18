@@ -42,10 +42,16 @@ window.renderStatistics = function(ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
+    var playerBarHeight = (BAR_HEIGHT * times[i]) / maxTime;
+
+    if (players[i] === 'Вы') {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+      ctx.fillStyle = 'rgba(0, 21, 255, 0.95)';
+    }
+
     ctx.fillText(players[i], CLOUD_X + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, CLOUD_HEIGHT - GAP);
-    ctx.fillRect(CLOUD_X + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i,
-    CLOUD_Y + GAP + TITLE_HEIGHT, // максимальное - текушее (maxTime - (BAR_HEIGHT * times[i]) / maxTime)???
-    BAR_WIDTH,
-    (BAR_HEIGHT * times[i]) / maxTime);
+    ctx.fillText(Math.round(times[i]), CLOUD_X + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, CLOUD_Y + GAP + TITLE_HEIGHT + (BAR_HEIGHT - playerBarHeight - GAP));
+    ctx.fillRect(CLOUD_X + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, CLOUD_Y + GAP + TITLE_HEIGHT + (BAR_HEIGHT - playerBarHeight), BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
   }
 };
