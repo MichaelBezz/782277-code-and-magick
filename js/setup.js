@@ -6,24 +6,24 @@ var WIZARD_COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 10
 var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARD_NUMBER = 4;
 
-var property = function (arrayWizard) {
-  var randomNumber = Math.floor(Math.random() * (arrayWizard.length - 1));
-  return arrayWizard[randomNumber];
+var getRandomArrayElement = function (arr) {
+  var randomNumber = Math.floor(Math.random() * (arr.length - 1));
+  return arr[randomNumber];
 };
 
-var createSimilarWizard = function () {
+var createSimilarWizards = function () {
   var wizards = [];
   for (var i = 0; i < WIZARD_NUMBER; i++) {
-    var similarWizard = {name: ' ', coatColor: ' ', eyesColor: ' '};
-    similarWizard.name = property(WIZARD_NAMES) + property(WIZARD_SURNAME);
-    similarWizard.coatColor = property(WIZARD_COAT_COLOR);
-    similarWizard.eyesColor = property(WIZARD_EYES_COLOR);
+    var similarWizard = {};
+    similarWizard.name = getRandomArrayElement(WIZARD_NAMES) + getRandomArrayElement(WIZARD_SURNAME);
+    similarWizard.coatColor = getRandomArrayElement(WIZARD_COAT_COLOR);
+    similarWizard.eyesColor = getRandomArrayElement(WIZARD_EYES_COLOR);
     wizards.push(similarWizard);
   }
   return wizards;
 };
 
-var newSimilarWizard = createSimilarWizard();
+var newSimilarWizards = createSimilarWizards();
 
 // #1 задание - находим селектор .setup и удаляем атрибут hidden - выбор персонажа
 var userDialog = document.querySelector('.setup');
@@ -43,9 +43,9 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
 var renderWizard = function () {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
-  wizardElement.querySelector('.setup-similar-label').textContent = newSimilarWizard[i].name;
-  wizardElement.querySelector('.wizard-coat').style.fill = newSimilarWizard[i].coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = newSimilarWizard[i].eyesColor;
+  wizardElement.querySelector('.setup-similar-label').textContent = newSimilarWizards[i].name;
+  wizardElement.querySelector('.wizard-coat').style.fill = newSimilarWizards[i].coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = newSimilarWizards[i].eyesColor;
 
   return wizardElement;
 };
@@ -53,6 +53,6 @@ var renderWizard = function () {
 var fragment = document.createDocumentFragment();
 
 for (var i = 0; i < WIZARD_NUMBER; i++) {
-  fragment.appendChild(renderWizard(newSimilarWizard[i]));
+  fragment.appendChild(renderWizard(newSimilarWizards[i]));
 }
 similarListElement.appendChild(fragment);
