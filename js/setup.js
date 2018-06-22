@@ -29,10 +29,6 @@ var createSimilarWizards = function () {
 
 var newSimilarWizards = createSimilarWizards();
 
-// находим селектор .setup и удаляем атрибут hidden - выбор персонажа
-// var userDialog = document.querySelector('.setup');
-// userDialog.classList.remove('hidden');
-
 // находим селектор setup-similar и удаляем атрибут hidden - похожие волшебники
 var similarWizards = document.querySelector('.setup-similar');
 similarWizards.classList.remove('hidden');
@@ -71,16 +67,15 @@ var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 
 var setupUserName = setup.querySelector('.setup-user-name');
-var setupWizard = document.querySelector('.setup-wizard');
 
-var wizardCoat = setupWizard.querySelector('.wizard-coat');
-var coatColor = document.querySelector('[name="coat-color"]');
+var wizardCoat = setup.querySelector('.wizard-coat');
+var coatColor = setup.querySelector('[name="coat-color"]');
 
-var wizardEyes = setupWizard.querySelector('.wizard-eyes');
-var eyesColor = document.querySelector('[name="eyes-color"]');
+var wizardEyes = setup.querySelector('.wizard-eyes');
+var eyesColor = setup.querySelector('[name="eyes-color"]');
 
-var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
-var fireballColor = document.querySelector('[name="fireball-color"]');
+var setupFireballWrap = setup.querySelector('.setup-fireball-wrap');
+var fireballColor = setup.querySelector('[name="fireball-color"]');
 
 // функция, для обработки события закрытия по esc
 var onPopupEscPress = function (evt) {
