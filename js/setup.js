@@ -71,11 +71,16 @@ var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 
 var setupUserName = setup.querySelector('.setup-user-name');
-
 var setupWizard = document.querySelector('.setup-wizard');
+
 var wizardCoat = setupWizard.querySelector('.wizard-coat');
+var coatColor = document.querySelector('[name="coat-color"]');
+
 var wizardEyes = setupWizard.querySelector('.wizard-eyes');
+var eyesColor = document.querySelector('[name="eyes-color"]');
+
 var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
+var fireballColor = document.querySelector('[name="fireball-color"]');
 
 // функция, для обработки события закрытия по esc
 var onPopupEscPress = function (evt) {
@@ -123,26 +128,30 @@ setupClose.addEventListener('keydown', function (evt) {
 // Если фокус находится на форме ввода имени, то окно закрываться не должно
 setupUserName.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
-    // stopPropagation();
+    evt.stopPropagation();
   }
 });
 
 // функция для изменения параметров волшебника
-/* var changeYourWizard = function (property, arrayOfProperty) {
-  property.style.fill = getRandomArrayElement(arrayOfProperty);
-}; */
+var changeYourWizard = function (property, hiddenProperty, arrayOfProperty) {
+  var randomElement = getRandomArrayElement(arrayOfProperty);
+  property.style.fill = randomElement;
+  hiddenProperty.value = randomElement;
+};
 
 // Изменение цвета мантии персонажа по нажатию
 wizardCoat.addEventListener('click', function () {
-  wizardCoat.style.fill = getRandomArrayElement(WIZARD_COAT_COLOR);
+  changeYourWizard(wizardCoat, coatColor, WIZARD_COAT_COLOR);
 });
 
 // Изменение цвета глаз персонажа по нажатию
 wizardEyes.addEventListener('click', function () {
-  wizardEyes.style.fill = getRandomArrayElement(WIZARD_EYES_COLOR);
+  changeYourWizard(wizardEyes, eyesColor, WIZARD_EYES_COLOR);
 });
 
 // Изменение цвета фаерболов по нажатию
 setupFireballWrap.addEventListener('click', function () {
-  setupFireballWrap.style.background = getRandomArrayElement(WIZARD_FIREBALL_COLOR);
+  var randomColorOfFireball = getRandomArrayElement(WIZARD_FIREBALL_COLOR);
+  setupFireballWrap.style.background = randomColorOfFireball;
+  fireballColor.value = randomColorOfFireball;
 });
