@@ -11,10 +11,12 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
   var setupUserName = setup.querySelector('.setup-user-name');
+  var form = setup.querySelector('.setup-wizard-form');
 
   // функция, для обработки события открытия
   var onSetupWindowOpenClick = function () {
     setup.classList.remove('hidden');
+    form.addEventListener('submit', onSaveDataSubmit);
     setupClose.addEventListener('click', onSetupWindowCloseClick);
     setupClose.addEventListener('keydown', onSetupCloseEnterKeydown);
     setupUserName.addEventListener('keydown', onFocusUserNameKeydown);
@@ -25,6 +27,7 @@
   // функция, для обработки события закрытия
   var onSetupWindowCloseClick = function () {
     setup.classList.add('hidden');
+    form.removeEventListener('submit', onSaveDataSubmit);
     setupClose.removeEventListener('click', onSetupWindowCloseClick);
     setupClose.removeEventListener('keydown', onSetupCloseEnterKeydown);
     setupUserName.removeEventListener('keydown', onFocusUserNameKeydown);
@@ -66,6 +69,12 @@
   });
   // обработчик, который открывает по клику настройку персонажа
   setupOpen.addEventListener('click', onSetupWindowOpenClick);
+
+  // отправка данных на сервер
+  var onSaveDataSubmit = function (evt) {
+    window.backend.save(new FormData(form), onSetupWindowCloseClick);
+    evt.preventDefault();
+  };
 
   window.setup = setup;
 
