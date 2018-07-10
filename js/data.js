@@ -3,7 +3,6 @@
 (function () {
 
   var WIZARD_NUMBER = 4;
-  var wizardFromServer = [];
 
   var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizards = document.querySelector('.setup-similar');
@@ -33,11 +32,8 @@
 
   // загрузка похожих волшебников с сервера
   var getSimilarWizard = function (data) {
-    wizardFromServer = data;
     createSimilarWizards(data);
   };
   window.backend.load(getSimilarWizard);
-
-  window.wizardFromServer = wizardFromServer;
 
 })();
