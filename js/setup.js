@@ -63,6 +63,7 @@ var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
 var setup = document.querySelector('.setup');
+window.setup = setup;
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 
@@ -77,47 +78,56 @@ var eyesColor = setup.querySelector('[name="eyes-color"]');
 var setupFireballWrap = setup.querySelector('.setup-fireball-wrap');
 var fireballColor = setup.querySelector('[name="fireball-color"]');
 
-// функция, для обработки события закрытия по esc
-var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    onPopupClose();
-  }
+var SETUP_TOP;
+var SETUP_CENTER = '50%';
+var setupStartCoords = function () {
+  var setupCoords = window.setup.getBoundingClientRect();
+  SETUP_TOP = setupCoords.top;
 };
 
-// функция, для обработки события открытия + добавление обработки по клавиши esc
-var onPopupOpen = function () {
+// функция, для обработки события открытия
+var onSetupWindowOpenClick = function () {
   setup.classList.remove('hidden');
-  document.addEventListener('keydown', onPopupEscPress);
-};
+  setupClose.addEventListener('click', onSetupWindowCloseClick);
 
-// функция, для обработки события закрытия + удаление обработки по клавиши esc
-var onPopupClose = function () {
+  setupStartCoords();
+
+  document.addEventListener('keydown', onEscKeydown);
+};
+// функция, для обработки события закрытия
+var onSetupWindowCloseClick = function () {
   setup.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscPress);
+  setupClose.removeEventListener('click', onSetupWindowCloseClick);
+
+  setup.style.top = SETUP_TOP + 'px';
+  setup.style.left = SETUP_CENTER;
+
+  document.removeEventListener('keydown', onEscKeydown);
 };
 
-// обработчик, который открывает по клику
-setupOpen.addEventListener('click', function () {
-  onPopupOpen();
-});
-
-// обработчик, который открывает по нажатию на enter
-setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    onPopupOpen();
+// функция, для обработки события по нажатию на esc
+var onEscKeydown = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    onSetupWindowCloseClick();
   }
-});
+};
+// функция, для обработки события по нажатию на enter
+var onEnterKeydown = function (evt, callback) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    callback();
+  }
+};
 
-// обработчик, который закрывает по клику
-setupClose.addEventListener('click', function () {
-  onPopupClose();
+// обработчик, который открывает по нажатию на enter настройку персонажа
+setupOpen.addEventListener('keydown', function (evt) {
+  onEnterKeydown(evt, onSetupWindowOpenClick);
 });
+// обработчик, который открывает по клику настройку персонажа
+setupOpen.addEventListener('click', onSetupWindowOpenClick);
 
 // обработчик, который закрывает по нажатию на enter
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    onPopupClose();
-  }
+  onEnterKeydown(evt, onSetupWindowCloseClick);
 });
 
 // Если фокус находится на форме ввода имени, то окно закрываться не должно
