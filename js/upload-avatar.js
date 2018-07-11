@@ -1,11 +1,11 @@
 'use strict';
-// модуль загрузки аватара //
+// модуль загрузки аватара волшебника //
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var fileChooser = window.setup.querySelector('.upload input[type=file]');
   var preview = window.setup.querySelector('.setup-user-pic');
-  var avatar = document.querySelector('.setup-open-icon')
+  var avatar = document.querySelector('.setup-open-icon');
 
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
