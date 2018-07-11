@@ -86,7 +86,8 @@
 
   window.backend = {
     save: save,
-    load: load
+    load: load,
+    uploadDataMessageError: uploadDataMessageError
   };
 
 })();
